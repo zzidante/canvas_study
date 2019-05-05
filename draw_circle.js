@@ -1,12 +1,22 @@
-export default function drawCircle(){
+export default function drawCircle(
+  {
+    context,
+    backgroundColor,
+    contextWidth,
+    contextHeight,
+    halfCanvas,
+    radius,
+    tau
+  }
+) {
   // color in the background
-  mainContext.fillStyle = backgroundColor;
-  mainContext.fillRect(0, 0 , contextWidth, contextHeight);
+  context.fillStyle = backgroundColor;
+  context.fillRect(0, 0 , contextWidth, contextHeight);
 
   //draw the circle
-  mainContext.beginPath();
+  context.beginPath();
 
-  mainContext.arc(
+  context.arc(
     halfCanvas, // horizontal center position
     halfCanvas, // vertical center position
     radius, // radius
@@ -16,9 +26,9 @@ export default function drawCircle(){
   );
 
   //end of drawing the circle
-  mainContext.closePath();
+  context.closePath();
 
   //color in the circle
-  mainContext.fillStyle = "rgba(0 ,0 ,125 , 0.5)";
-  mainContext.fill();
+  context.fillStyle = "rgba(0 ,0 , 125 , 0.5)";
+  context.fill();
 };

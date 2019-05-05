@@ -1,19 +1,28 @@
 // A simple mime database.
+// probably breaks if > 1 directory deep exists
 // https://github.com/creationix/simple-mime
+
 let types;
 
 module.exports = function setup(defaultMime) {
-  return function getMime(path) {
-    path = path.toLowerCase().trim();
-    var index = path.lastIndexOf("/");
-    if (index >= 0) {
-      path = path.substr(index + 1);
+  return function getMime(_path) {
+    let path = _path.toLowerCase().trim(); // ex: thing.js
+    let slashIndex = path.lastIndexOf("/");
+    let dotIndex = null;
+    let noSlashPath = null;
+    let extensionType = null;
+
+    if (slashIndex >= 0) {
+      noSlashPath = path.substr(slashIndex + 1);  // ex: thing.js // no change
     }
-    index = path.lastIndexOf(".");
-    if (index >= 0) {
-      path = path.substr(index + 1);
+
+    dotIndex = noSlashPath.lastIndexOf(".");
+
+    if (dotIndex >= 0) {
+      extensionType = noSlashPath.substr(dotIndex + 1);  // ex: thing.js => js
     }
-    return types[path] || defaultMime;
+
+    return types[extensionType] || defaultMime;
   };
 };
 
